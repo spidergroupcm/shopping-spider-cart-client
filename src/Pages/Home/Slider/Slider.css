@@ -1,0 +1,25 @@
+/* Slider.css */
+.glassy-slider .swiper-button-prev,
+.glassy-slider .swiper-button-next {
+  color: #ffffff;
+  text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ccff;
+}
+
+.glassy-slider .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.7);
+  opacity: 1;
+}
+
+.glassy-slider .swiper-pagination-bullet-active {
+  background: #00ffc3;
+  box-shadow: 0 0 8px #00ffc3;
+}
+
+/* Glass effect */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+}
