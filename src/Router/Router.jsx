@@ -33,6 +33,8 @@ import ErrorPage from "../components/ErrorPage/ErrorPage";
 
 
 
+
+
 export const router = createBrowserRouter([
     // main layout route
     {
@@ -83,7 +85,6 @@ export const router = createBrowserRouter([
         path:"/register",
         element:<Register/>
     },
-    
     
 
     // dashboard route

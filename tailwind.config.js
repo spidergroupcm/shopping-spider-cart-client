@@ -20,6 +20,9 @@ export default {
         customPurple: '#800080',
 
       },
+      fontFamily: {
+        montserrat: ["Montserrat", "sans-serif"],
+      },
       animation: {
         fadeIn: 'fadeIn 0.2s ease-out forwards',
       },

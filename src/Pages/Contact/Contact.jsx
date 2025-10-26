@@ -81,7 +81,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold">Call Us:</h4>
-                  <p>+8801818186676</p>
+                  <p>+88 01789711089</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
@@ -90,7 +90,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold">Email Us:</h4>
-                  <p>wearhive@gmail.com</p>
+                  <p>spidergroupcm@gmail.com</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">

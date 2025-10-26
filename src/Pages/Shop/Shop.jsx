@@ -1,13 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 
 const Shop = () => {
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  // get category from URL
+  const categoryFromUrl = searchParams.get("category") || "All";
 
   const { data = {}, isLoading, error } = useQuery({
     queryKey: ["products"],
@@ -20,14 +24,18 @@ const Shop = () => {
   const allProducts = data?.products || [];
 
   const [searchText, setSearchText] = useState("");
-  const [category, setCategory] = useState("All");
+  const [category, setCategory] = useState(categoryFromUrl); // set initial category from URL
   const [sortOrder, setSortOrder] = useState("");
+
+  useEffect(() => {
+    setCategory(categoryFromUrl);
+  }, [categoryFromUrl]);
 
   const handleClick = (id) => {
     navigate(`/products/${id}`);
   };
 
-  // Filter and sort logic
+  // Filter + Sort
   const filteredProducts = allProducts
     .filter((product) =>
       product.productName.toLowerCase().includes(searchText.toLowerCase())
@@ -42,21 +50,31 @@ const Shop = () => {
     });
 
   if (isLoading) return <LoadingSpinner />;
-  if (error) return <p>Failed to load products!</p>;
+  if (error)
+    return (
+      <div className="center">
+        <div className="mt-20 bg-customPurple p-10 w-80 center rounded-md">
+          <p className="text-white">Failed to load products!</p>
+        </div>
+      </div>
+    );
 
   return (
     <div className="w-full">
-    
       <Helmet>
-      <title>Shop | Shopping Spider</title>
-      <meta name="description" content="Browse our full catalog of stylish clothing, accessories, and exclusive deals at Shopping Spider." />
+        <title>Shop | Shopping Spider</title>
+        <meta
+          name="description"
+          content="Browse our full catalog of stylish clothing, accessories, and exclusive deals at Shopping Spider."
+        />
       </Helmet>
-          <div className="w-11/12 mx-auto pb-20">
-        <h2 className="text-3xl font-bold text-center text-customPurple mt-10 mb-6">Explore Our Fashion Products</h2>
+      <div className="w-11/12 mx-auto pb-20">
+        <h2 className="text-3xl font-bold text-center text-customPurple mt-10 mb-6">
+          Explore Our Fashion Products
+        </h2>
 
-        {/* Search & Filter Section */}
+        {/* Search & Filter */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-10">
-          {/* Search */}
           <input
             type="text"
             placeholder="Search by name..."
@@ -65,12 +83,14 @@ const Shop = () => {
             className="border border-gray-300 px-4 py-2 rounded-md w-full md:w-1/3 focus:outline-none focus:ring-2 focus:ring-customPurple"
           />
 
-          {/* Category Filter */}
           <div className="flex gap-2">
             {["All", "Women", "Men", "Kids"].map((cat) => (
               <button
                 key={cat}
-                onClick={() => setCategory(cat)}
+                onClick={() => {
+                  setCategory(cat);
+                  navigate(`/shop?category=${cat}`);
+                }}
                 className={`px-4 py-2 rounded-md text-sm font-medium ${
                   category === cat
                     ? "bg-customPurple text-white"
@@ -82,7 +102,6 @@ const Shop = () => {
             ))}
           </div>
 
-          {/* Sort by Price */}
           <select
             onChange={(e) => setSortOrder(e.target.value)}
             value={sortOrder}
@@ -131,5 +150,4 @@ const Shop = () => {
 };
 
 export default Shop;
-
 
